@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"sync"
 	"time"
 
@@ -31,7 +32,17 @@ func (s *redirconf) serve(w http.ResponseWriter, r *http.Request, ps httprouter.
 		http.Error(w, "foo", http.StatusBadRequest)
 		return
 	}
-	buf := meta(s.Host, s.VCS, "https://"+s.Host+pn+".git", pn)
+
+	// 2-component paths
+	pn = strings.TrimPrefix(pn, "/")
+	splits := strings.Split(pn, "/")
+	if len(splits) < 2 {
+		http.Error(w, "foo", http.StatusBadRequest)
+		return
+	}
+	base := splits[0] + "/" + splits[1]
+
+	buf := meta(s.Host+"/"+base, s.VCS, "https://"+s.Host+"/"+base+".git", pn)
 	http.ServeContent(w, r, "", time.Time{}, bytes.NewReader([]byte(buf)))
 }
 
