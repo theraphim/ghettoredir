@@ -26,7 +26,7 @@ gitbucket go get helper
 %setup -q
 
 %build
-mkdir -p goapp/src/github.com/theraphim/%{name} goapp/bin
+mkdir -p goapp/src/github.com/theraphim goapp/bin
 ln -s ${PWD} goapp/src/github.com/theraphim/%{name}
 export GO111MODULE=off
 export GOPATH=${PWD}/goapp
