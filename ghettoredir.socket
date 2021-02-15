@@ -1,0 +1,15 @@
+[Unit]
+Description=UNIX Socket for gitbucket go get helper
+
+[Install]
+WantedBy=multi-user.target
+
+[Socket]
+ListenStream=/var/run/ghettoredir/http
+SocketUser=nginx
+SocketGroup=nginx
+SocketMode=0666
+RuntimeDirectory=ghettoredir
+User=nobody
+Group=nobody
+RuntimeDirectoryMode=0755

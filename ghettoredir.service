@@ -1,0 +1,17 @@
+[Unit]
+Description=gitbucket go get redirector helper
+After=local-fs.target network.target ghettoredir.socket
+Requires=local-fs.target network.target ghettoredir.socket
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/sysconfig/ghettoredir
+ExecStart=/usr/bin/ghettoredir
+User=nobody
+Group=nobody
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Also=ghettoredir.socket
