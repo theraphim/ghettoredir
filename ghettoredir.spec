@@ -46,7 +46,6 @@ export GOPATH=${PWD}/goapp
 
 %files
 %{_bindir}/%{name}
-%dir %attr(-,%{name},%{name}) %{_sharedstatedir}/%{name}
 %{_unitdir}/%{name}.service
 %{_unitdir}/%{name}.socket
 %config(noreplace) %{_sysconfdir}/%{name}
