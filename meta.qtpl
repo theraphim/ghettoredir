@@ -1,0 +1,13 @@
+{% func meta(importRoot, vcs, vcsRoot, suffix string) %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="go-import" content="{%s importRoot %} {%s vcs %} {%s vcsRoot %}">
+<meta http-equiv="refresh" content="0; url=https://godoc.org/{%s importRoot %}{%s suffix %}">
+</head>
+<body>
+Redirecting to docs at <a href="https://godoc.org/{%s importRoot %}{%s suffix %}">godoc.org/{%s importRoot %}{%s suffix %}</a>...
+</body>
+</html>
+{% endfunc %}
