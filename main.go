@@ -21,6 +21,7 @@ import (
 type redirconf struct {
 	ListenHTTP []string
 	Host       string
+	DropPrefix string `default:"/ghetto"`
 	VCS        string `default:"git"`
 }
 
@@ -42,7 +43,7 @@ func main() {
 	}
 	router := httprouter.New()
 
-	router.GET("/*path", conf.serve)
+	router.GET(conf.DropPrefix+"/*path", conf.serve)
 
 	listeners, err := activation.Listeners()
 	if err != nil {
