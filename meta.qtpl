@@ -1,3 +1,5 @@
+{% package main %}
+
 {% func meta(importRoot, vcs, vcsRoot, suffix string) %}
 <!DOCTYPE html>
 <html>
