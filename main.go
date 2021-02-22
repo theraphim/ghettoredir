@@ -20,12 +20,13 @@ import (
 )
 
 type redirconf struct {
-	ListenHTTP []string
-	BaseLength int    `default:"2"`
-	RepoSuffix string `default:".git"`
-	Host       string
-	DropPrefix string `default:"/ghetto"`
-	VCS        string `default:"git"`
+	ListenHTTP   []string
+	BaseLength   int    `default:"2"`
+	RepoSuffix   string `default:".git"`
+	Host         string
+	DropPrefix   string `default:"/ghetto"`
+	InsertPrefix string
+	VCS          string `default:"git"`
 }
 
 func (s *redirconf) serve(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -50,7 +51,6 @@ func (s *redirconf) serve(w http.ResponseWriter, r *http.Request, ps httprouter.
 	}
 	base := strings.Join(splits[:s.BaseLength], "/")
 	suffix := "/" + strings.Join(splits[s.BaseLength:], "/")
-	log.Infof("%+v", r.Host)
 
 	origHost := r.Host
 	if origHost == "" {
