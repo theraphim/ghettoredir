@@ -57,7 +57,7 @@ func (s *redirconf) serve(w http.ResponseWriter, r *http.Request, ps httprouter.
 		origHost = s.Host
 	}
 
-	buf := meta(origHost+"/"+base, s.VCS, "https://"+s.Host+"/"+base+s.RepoSuffix, suffix)
+	buf := meta(origHost+s.InsertPrefix+"/"+base, s.VCS, "https://"+s.Host+"/"+base+s.RepoSuffix, suffix)
 	http.ServeContent(w, r, "", time.Time{}, bytes.NewReader([]byte(buf)))
 }
 
