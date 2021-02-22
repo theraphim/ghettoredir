@@ -50,9 +50,9 @@ func (s *redirconf) serve(w http.ResponseWriter, r *http.Request, ps httprouter.
 	}
 	base := strings.Join(splits[:s.BaseLength], "/")
 	suffix := "/" + strings.Join(splits[s.BaseLength:], "/")
-	log.Infof("%+v", r.Header)
+	log.Infof("%+v", r.Host)
 
-	origHost := r.Header.Get("Host")
+	origHost := r.Host
 	if origHost == "" {
 		origHost = s.Host
 	}
