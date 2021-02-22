@@ -21,6 +21,8 @@ import (
 
 type redirconf struct {
 	ListenHTTP []string
+	BaseLength int    `default:"2"`
+	RepoSuffix string `default:".git"`
 	Host       string
 	DropPrefix string `default:"/ghetto"`
 	VCS        string `default:"git"`
@@ -29,20 +31,27 @@ type redirconf struct {
 func (s *redirconf) serve(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	pn := ps.ByName("path")
 	if pn == "" {
-		http.Error(w, "foo", http.StatusBadRequest)
+		http.Error(w, "path must not be empty", http.StatusBadRequest)
 		return
 	}
 
 	// 2-component paths
 	pn = strings.TrimPrefix(pn, "/")
 	splits := strings.Split(pn, "/")
-	if len(splits) < 2 {
-		http.Error(w, "foo", http.StatusBadRequest)
+	if len(splits) < s.BaseLength {
+		http.Error(w, "incorrect number of components", http.StatusBadRequest)
 		return
 	}
-	base := splits[0] + "/" + splits[1]
+	for i := 0; i < s.BaseLength; i++ {
+		if splits[i] == "" {
+			http.Error(w, "path parts must not be empty", http.StatusBadRequest)
+			return
+		}
+	}
+	base := strings.Join(splits[:s.BaseLength], "/")
+	suffix := "/" + strings.Join(splits[s.BaseLength:], "/")
 
-	buf := meta(s.Host+"/"+base, s.VCS, "https://"+s.Host+"/"+base+".git", pn)
+	buf := meta(s.Host+"/"+base, s.VCS, "https://"+s.Host+"/"+base+s.RepoSuffix, suffix)
 	http.ServeContent(w, r, "", time.Time{}, bytes.NewReader([]byte(buf)))
 }
 
