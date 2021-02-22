@@ -30,6 +30,7 @@ mkdir -p goapp/src/github.com/theraphim goapp/bin
 ln -s ${PWD} goapp/src/github.com/theraphim/%{name}
 export GO111MODULE=off
 export GOPATH=${PWD}/goapp
+export CGO_ENABLED=0
 %gobuild -o goapp/bin/%{name} github.com/theraphim/%{name}
 
 %install
