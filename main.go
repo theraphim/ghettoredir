@@ -22,7 +22,7 @@ import (
 type redirconf struct {
 	ListenHTTP   []string
 	BaseLength   int    `default:"2"`
-	RepoSuffix   string `default:".git"`
+	RepoSuffix   string `default:""`
 	Host         string
 	DropPrefix   string `default:"/ghetto"`
 	InsertPrefix string
