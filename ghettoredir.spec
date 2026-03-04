@@ -1,4 +1,5 @@
 %global gomodulesmode GO111MODULE=auto
+%define debug_package %{nil}
 
 Name:		ghettoredir
 Version:	0.0.1
