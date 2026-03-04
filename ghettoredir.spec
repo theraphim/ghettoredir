@@ -1,3 +1,5 @@
+%global gomodulesmode GO111MODULE=auto
+
 Name:		ghettoredir
 Version:	0.0.1
 Release:	1%{?dist}
@@ -26,17 +28,12 @@ gitbucket go get helper
 %setup -q
 
 %build
-mkdir -p goapp/src/github.com/theraphim goapp/bin
-ln -s ${PWD} goapp/src/github.com/theraphim/%{name}
-export GO111MODULE=off
-export GOPATH=${PWD}/goapp
-export CGO_ENABLED=0
-%gobuild -o goapp/bin/%{name} github.com/theraphim/%{name}
+%gobuild -o bin/%{name} github.com/theraphim/%{name}
 
 %install
 
 %{__install} -d $RPM_BUILD_ROOT%{_bindir}
-%{__install} -v -D -t $RPM_BUILD_ROOT%{_bindir} goapp/bin/%{name}
+%{__install} -v -D -t $RPM_BUILD_ROOT%{_bindir} bin/%{name}
 %{__install} -d $RPM_BUILD_ROOT%{_unitdir}
 %{__install} -v -D -t $RPM_BUILD_ROOT%{_unitdir} %{name}.service
 %{__install} -v -D -t $RPM_BUILD_ROOT%{_unitdir} %{name}.socket
